@@ -9,11 +9,30 @@ LEADS_NAMES = ['i', 'ii', 'iii', 'avr', 'avl', 'avf', 'v1', 'v2', 'v3', 'v4', 'v
 
 
 def get_signals_true(dataset):
+    """
+    Генерирует датасет без всяких повреждений чего-либо
+    :param dataset: распакованный json с исходным файлом LUDB
+    :return: датасет размерности 200x12
+    """
     signals_mkV = []
     for patient_id, patient_data in dataset.items():
         signals_mkV.append(_get_patient_12_leads_signals(patient_data))
     return signals_mkV
 
+
+def get_signals_damaged(dataset, wave_name, leads_names=None):
+    """
+
+    :param dataset:
+    :param wave_name:
+    :param leads_names:
+    :return:
+    """
+    damaged_signals_12_mkV = []
+    for patient_id, patient_data in dataset.items():
+        damaged_12_signals_patient = damage_patient(patient_data, wave_name, leads_names)
+        damaged_signals_12_mkV.append(damaged_12_signals_patient)
+    return damaged_signals_12_mkV
 
 def _get_patient_12_leads_signals(patient_data):
     leads_signals = []
@@ -140,12 +159,7 @@ def damage_patient(patient_data, wave_name, leads_names):
     return damaged_12_signals_mkV
 
 
-def get_signals_damaged(dataset, wave_name, leads_names=None):
-    damaged_signals_12_mkV = []
-    for patient_id, patient_data in dataset.items():
-        damaged_12_signals_patient = damage_patient(patient_data, wave_name, leads_names)
-        damaged_signals_12_mkV.append(damaged_12_signals_patient)
-    return damaged_signals_12_mkV
+
 
 def plot_example(wave_name, patient_num, lead_num):
     """

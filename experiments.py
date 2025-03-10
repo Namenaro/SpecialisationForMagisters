@@ -8,7 +8,7 @@ if __name__ == "__main__":
     dataset = json.load(open(path_to_dataset, 'r'))
 
     # Неповрежденный сигнал всегда один и тот же, размерность 200 на 12
-    true_mkv = get_signals_true()
+    true_mkv = get_signals_true(dataset)
 
     # ПРИМЕР поврежения одного отведения:
     # Повредим у всех пациентов отведение i, удалив в нем qrs
